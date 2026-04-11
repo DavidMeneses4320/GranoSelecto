@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Granoselecto — Café Premium Colombiano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --cafe:      #2B1810;
+  --espresso:  #4B2E2B;
+  --tostado:   #7B4F3A;
+  --crema:     #F5E6D3;
+  --leche:     #FAF3EC;
+  --verde:     #2F5D50;
+  --verde-claro: #3D7A67;
+  --dorado:    #C89B4A;
+  --texto:     #1A0F0A;
+  --gris:      #8B7E78;
+  --blanco:    #FFFFFF;
+  --sombra:    0 4px 30px rgba(43,24,16,0.12);
+  --sombra-lg: 0 20px 60px rgba(43,24,16,0.2);
+  --radio:     12px;
+  --trans:     0.3s cubic-bezier(0.4,0,0.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--leche);
+  color: var(--texto);
+  overflow-x: hidden;
+}
+
+/* ─── BARRA DE ANUNCIO ─── */
+.anuncio {
+  background: var(--verde);
+  color: #fff;
+  text-align: center;
+  padding: 10px 20px;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 200;
+}
+.anuncio span { color: var(--dorado); font-weight: 600; }
+
+/* ─── HEADER / NAV ─── */
+header {
+  background: var(--cafe);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+
+nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 30px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.logo-icon {
+  width: 38px; height: 38px;
+  background: var(--dorado);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.logo-text {
+  font-family: 'Playfair Display', serif;
+  color: var(--crema);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  list-style: none;
+}
+.nav-links a {
+  color: rgba(245,230,211,0.75);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: var(--trans);
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 2px;
+  background: var(--dorado);
+  transition: var(--trans);
+}
+.nav-links a:hover { color: var(--crema); }
+.nav-links a:hover::after { width: 100%; }
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 22px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; border: none; transition: var(--trans); text-decoration: none; font-family: 'DM Sans', sans-serif; }
+
+.btn-ghost { background: transparent; color: var(--crema); border: 1.5px solid rgba(245,230,211,0.3); }
+.btn-ghost:hover { border-color: var(--dorado); color: var(--dorado); }
+
+.btn-dorado { background: var(--dorado); color: var(--cafe); }
+.btn-dorado:hover { background: #d4a855; transform: translateY(-1px); box-shadow: 0 4px 15px rgba(200,155,74,0.4); }
+
+.btn-verde { background: var(--verde); color: #fff; }
+.btn-verde:hover { background: var(--verde-claro); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(47,93,80,0.4); }
+
+.btn-outline-cafe { background: transparent; color: var(--cafe); border: 2px solid var(--cafe); }
+.btn-outline-cafe:hover { background: var(--cafe); color: var(--crema); }
+
+.carrito-btn {
+  background: rgba(245,230,211,0.1);
+  border: 1.5px solid rgba(245,230,211,0.2);
+  color: var(--crema);
+  padding: 9px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--trans);
+  font-family: 'DM Sans', sans-serif;
+}
+.carrito-btn:hover { background: rgba(245,230,211,0.15); border-color: var(--dorado); }
+
+.badge {
+  background: var(--dorado);
+  color: var(--cafe);
+  border-radius: 50%;
+  width: 20px; height: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 92vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--cafe);
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=1600') center/cover no-repeat;
+  opacity: 0.2;
+}
+
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(43,24,16,0.95) 0%, rgba(43,24,16,0.7) 50%, rgba(47,93,80,0.3) 100%);
+}
+
+.hero-content {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  width: 100%;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(200,155,74,0.15);
+  border: 1px solid rgba(200,155,74,0.4);
+  color: var(--dorado);
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  color: var(--crema);
+  font-size: clamp(38px, 5vw, 64px);
+  line-height: 1.1;
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+.hero h1 em {
+  color: var(--dorado);
+  font-style: italic;
+}
+
+.hero p {
+  color: rgba(245,230,211,0.75);
+  font-size: 17px;
+  line-height: 1.7;
+  margin-bottom: 36px;
+  max-width: 480px;
+}
+
+.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+.hero-stats {
+  display: flex;
+  gap: 32px;
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(245,230,211,0.1);
+}
+
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--dorado);
+}
+.stat-label {
+  font-size: 12px;
+  color: rgba(245,230,211,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.hero-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hero-card {
+  background: rgba(245,230,211,0.06);
+  border: 1px solid rgba(245,230,211,0.1);
+  border-radius: 16px;
+  padding: 20px 24px;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: var(--trans);
+  cursor: default;
+}
+.hero-card:hover {
+  background: rgba(245,230,211,0.1);
+  border-color: rgba(200,155,74,0.3);
+  transform: translateX(6px);
+}
+
+.hero-card-icon {
+  width: 48px; height: 48px;
+  background: var(--espresso);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.hero-card-text h4 { color: var(--crema); font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+.hero-card-text p { color: rgba(245,230,211,0.55); font-size: 13px; }
+
+/* ─── SECCIONES GENERALES ─── */
+section { padding: 90px 30px; }
+
+.container { max-width: 1200px; margin: 0 auto; }
+
+.section-label {
+  display: inline-block;
+  color: var(--verde);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--cafe);
+  margin-bottom: 16px;
+}
+
+.section-sub {
+  color: var(--gris);
+  font-size: 17px;
+  line-height: 1.7;
+  max-width: 560px;
+}
+
+.section-header { margin-bottom: 60px; }
+
+/* ─── PROCESO / PASOS ─── */
+.proceso { background: var(--cafe); }
+
+.proceso .section-title,
+.proceso .section-label { color: var(--crema); }
+.proceso .section-label { color: var(--dorado); }
+.proceso .section-sub { color: rgba(245,230,211,0.6); }
+
+.pasos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  margin-top: 60px;
+}
+
+.paso {
+  background: rgba(245,230,211,0.04);
+  border: 1px solid rgba(245,230,211,0.08);
+  padding: 40px 30px;
+  position: relative;
+  transition: var(--trans);
+}
+.paso:hover {
+  background: rgba(245,230,211,0.08);
+}
+
+.paso-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 64px;
+  font-weight: 900;
+  color: rgba(200,155,74,0.15);
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+.paso-icon { font-size: 32px; margin-bottom: 16px; }
+.paso h3 { color: var(--crema); font-size: 18px; font-weight: 600; margin-bottom: 10px; }
+.paso p { color: rgba(245,230,211,0.5); font-size: 14px; line-height: 1.6; }
+
+/* ─── PRODUCTOS ─── */
+.productos { background: var(--leche); }
+
+.catalogo {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 28px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: var(--sombra);
+  transition: var(--trans);
+  position: relative;
+}
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--sombra-lg);
+}
+
+.card-badge {
+  position: absolute;
+  top: 16px; left: 16px;
+  background: var(--verde);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 50px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  z-index: 2;
+}
+.card-badge.nuevo { background: var(--dorado); color: var(--cafe); }
+
+.card-img {
+  width: 100%; height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+.card-content { padding: 22px; }
+
+.card-region {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--verde);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--cafe);
+  margin-bottom: 8px;
+}
+
+.card-desc {
+  font-size: 13px;
+  color: var(--gris);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.precio {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--cafe);
+}
+.precio span { font-size: 13px; color: var(--gris); font-family: 'DM Sans'; font-weight: 400; }
+
+.add-btn {
+  background: var(--cafe);
+  color: var(--crema);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--trans);
+  font-family: 'DM Sans', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.add-btn:hover { background: var(--espresso); transform: scale(1.03); }
+
+.card-estrellas { color: var(--dorado); font-size: 13px; margin-bottom: 12px; }
+
+/* ─── SUSCRIPCION ─── */
+.suscripcion { background: var(--crema); }
+
+.planes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 60px;
+}
+
+.plan {
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px 30px;
+  box-shadow: var(--sombra);
+  position: relative;
+  transition: var(--trans);
+  border: 2px solid transparent;
+}
+
+.plan:hover { transform: translateY(-6px); box-shadow: var(--sombra-lg); }
+.plan.popular {
+  border-color: var(--verde);
+  transform: scale(1.04);
+}
+.plan.popular:hover { transform: scale(1.04) translateY(-6px); }
+
+.plan-tag {
+  position: absolute;
+  top: -14px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--verde);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 16px;
+  border-radius: 50px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.plan-icono { font-size: 40px; margin-bottom: 16px; }
+
+.plan h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--cafe);
+  margin-bottom: 8px;
+}
+
+.plan-precio {
+  font-family: 'Playfair Display', serif;
+  font-size: 38px;
+  font-weight: 900;
+  color: var(--cafe);
+  margin: 16px 0;
+}
+.plan-precio small {
+  font-size: 14px;
+  font-weight: 400;
+  font-family: 'DM Sans';
+  color: var(--gris);
+}
+
+.plan-desc { color: var(--gris); font-size: 14px; margin-bottom: 24px; line-height: 1.6; }
+
+.plan-items { list-style: none; margin-bottom: 30px; }
+.plan-items li {
+  font-size: 14px;
+  color: var(--texto);
+  padding: 8px 0;
+  border-bottom: 1px solid var(--crema);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.plan-items li::before {
+  content: '✓';
+  color: var(--verde);
+  font-weight: 700;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+/* ─── EXPERIENCIA / VIDEO ─── */
+.experiencia { background: var(--leche); }
+
+.exp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.exp-visual {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.exp-visual img {
+  width: 100%; height: 450px;
+  object-fit: cover;
+  display: block;
+}
+.exp-play-btn {
+  position: absolute;
+  inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(43,24,16,0.3);
+  cursor: pointer;
+  transition: var(--trans);
+}
+.exp-play-btn:hover { background: rgba(43,24,16,0.45); }
+.exp-play-btn span {
+  width: 72px; height: 72px;
+  background: rgba(245,230,211,0.95);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  color: var(--cafe);
+  transition: var(--trans);
+}
+.exp-play-btn:hover span { transform: scale(1.1); }
+
+.exp-card {
+  position: absolute;
+  bottom: 24px; left: 24px;
+  background: rgba(43,24,16,0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 14px;
+  padding: 16px 20px;
+  color: var(--crema);
+}
+.exp-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.exp-card p { font-size: 12px; color: rgba(245,230,211,0.6); }
+
+.exp-features { display: flex; flex-direction: column; gap: 28px; margin-top: 40px; }
+.exp-feature {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+.exp-feature-icon {
+  width: 48px; height: 48px;
+  background: var(--crema);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.exp-feature h4 { font-size: 16px; font-weight: 600; color: var(--cafe); margin-bottom: 6px; }
+.exp-feature p { font-size: 14px; color: var(--gris); line-height: 1.6; }
+
+/* ─── TESTIMONIOS ─── */
+.testimonios { background: var(--cafe); overflow: hidden; }
+.testimonios .section-title { color: var(--crema); }
+.testimonios .section-label { color: var(--dorado); }
+
+.testimonios-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 60px;
+}
+
+.testimonial {
+  background: rgba(245,230,211,0.06);
+  border: 1px solid rgba(245,230,211,0.1);
+  border-radius: 18px;
+  padding: 30px;
+  transition: var(--trans);
+}
+.testimonial:hover {
+  background: rgba(245,230,211,0.1);
+  border-color: rgba(200,155,74,0.3);
+}
+
+.test-stars { color: var(--dorado); font-size: 16px; margin-bottom: 16px; }
+.test-texto {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-style: italic;
+  color: var(--crema);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.test-autor {
+  display: flex; align-items: center; gap: 12px;
+}
+.test-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.test-avatar-placeholder {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--espresso);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  color: var(--crema);
+}
+.test-nombre { color: var(--crema); font-size: 14px; font-weight: 600; }
+.test-ciudad { color: rgba(245,230,211,0.4); font-size: 12px; }
+
+/* ─── NEWSLETTER ─── */
+.newsletter {
+  background: linear-gradient(135deg, var(--verde) 0%, var(--verde-claro) 100%);
+  padding: 80px 30px;
+  text-align: center;
+}
+.newsletter h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 42px);
+  color: #fff;
+  margin-bottom: 12px;
+}
+.newsletter p { color: rgba(255,255,255,0.75); font-size: 16px; margin-bottom: 36px; }
+
+.newsletter-form {
+  display: flex;
+  gap: 12px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.newsletter-form input {
+  flex: 1;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: 'DM Sans', sans-serif;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  outline: none;
+  border: 1.5px solid rgba(255,255,255,0.2);
+}
+.newsletter-form input::placeholder { color: rgba(255,255,255,0.5); }
+.newsletter-form input:focus { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.5); }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--cafe);
+  color: var(--crema);
+  padding: 60px 30px 30px;
+}
+
+.footer-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+
+.footer-brand { }
+.footer-logo {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px;
+  text-decoration: none;
+}
+.footer-logo span:last-child {
+  font-family: 'Playfair Display', serif;
+  color: var(--crema);
+  font-size: 20px;
+}
+.footer-brand p {
+  color: rgba(245,230,211,0.5);
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  max-width: 260px;
+}
+
+.social-links { display: flex; gap: 10px; }
+.social-link {
+  width: 38px; height: 38px;
+  background: rgba(245,230,211,0.08);
+  border: 1px solid rgba(245,230,211,0.12);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(245,230,211,0.6);
+  font-size: 16px;
+  text-decoration: none;
+  transition: var(--trans);
+  cursor: pointer;
+}
+.social-link:hover { background: rgba(245,230,211,0.15); color: var(--crema); }
+
+.footer-col h4 {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--dorado);
+  margin-bottom: 20px;
+}
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 10px; }
+.footer-col a {
+  color: rgba(245,230,211,0.55);
+  font-size: 14px;
+  text-decoration: none;
+  transition: var(--trans);
+}
+.footer-col a:hover { color: var(--crema); }
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 24px;
+  border-top: 1px solid rgba(245,230,211,0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-bottom p { color: rgba(245,230,211,0.3); font-size: 13px; }
+
+/* ─── CARRITO SIDEBAR ─── */
+.carrito-overlay {
+  position: fixed; inset: 0;
+  background: rgba(43,24,16,0.6);
+  z-index: 300;
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--trans);
+}
+.carrito-overlay.open { opacity: 1; pointer-events: all; }
+
+.carrito-panel {
+  position: fixed;
+  top: 0; right: 0;
+  width: 400px; max-width: 100%;
+  height: 100%;
+  background: #fff;
+  z-index: 301;
+  transform: translateX(100%);
+  transition: var(--trans);
+  display: flex;
+  flex-direction: column;
+}
+.carrito-panel.open { transform: translateX(0); }
+
+.carrito-header {
+  padding: 24px;
+  border-bottom: 1px solid var(--crema);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.carrito-header h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  color: var(--cafe);
+}
+
+.cerrar-btn {
+  width: 36px; height: 36px;
+  background: var(--crema);
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--trans);
+}
+.cerrar-btn:hover { background: var(--espresso); color: #fff; }
+
+.carrito-items { flex: 1; overflow-y: auto; padding: 20px; }
+.carrito-vacio {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--gris);
+}
+.carrito-vacio span { font-size: 48px; display: block; margin-bottom: 16px; }
+.carrito-vacio p { font-size: 15px; }
+
+.cart-item {
+  display: flex;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--crema);
+  align-items: center;
+}
+.cart-item img {
+  width: 64px; height: 64px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+.cart-item-info { flex: 1; }
+.cart-item-info h4 { font-size: 14px; font-weight: 600; color: var(--cafe); margin-bottom: 4px; }
+.cart-item-info p { font-size: 13px; color: var(--gris); }
+.cart-item-precio { font-weight: 700; color: var(--cafe); font-size: 15px; }
+.cart-item-del { background: none; border: none; color: var(--gris); cursor: pointer; font-size: 16px; padding: 4px; transition: var(--trans); }
+.cart-item-del:hover { color: #c0392b; }
+
+.carrito-footer {
+  padding: 20px 24px;
+  border-top: 1px solid var(--crema);
+  background: var(--leche);
+}
+.carrito-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.carrito-total span:first-child { font-size: 14px; color: var(--gris); }
+.carrito-total span:last-child {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--cafe);
+}
+
+/* ─── MODAL LOGIN ─── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(43,24,16,0.7);
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--trans);
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+
+.modal {
+  background: #fff;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 420px;
+  padding: 40px;
+  transform: scale(0.9) translateY(20px);
+  transition: var(--trans);
+  position: relative;
+}
+.modal-overlay.open .modal { transform: scale(1) translateY(0); }
+
+.modal-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 32px; height: 32px;
+  background: var(--crema);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--trans);
+}
+.modal-close:hover { background: var(--espresso); color: #fff; }
+
+.modal-logo {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.modal-logo span { font-size: 36px; }
+.modal-logo h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--cafe);
+  margin-top: 8px;
+}
+.modal-logo p { font-size: 13px; color: var(--gris); margin-top: 4px; }
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--crema);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 28px;
+}
+.tab {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--trans);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--gris);
+}
+.tab.active { background: #fff; color: var(--cafe); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--cafe); margin-bottom: 6px; }
+.form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--crema);
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--leche);
+  color: var(--texto);
+  transition: var(--trans);
+  outline: none;
+}
+.form-group input:focus { border-color: var(--verde); background: #fff; }
+
+.form-extra {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+.form-extra a { color: var(--verde); text-decoration: none; font-weight: 500; }
+.form-extra label { display: flex; align-items: center; gap: 6px; color: var(--gris); cursor: pointer; }
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+.divider span { height: 1px; flex: 1; background: var(--crema); }
+.divider p { font-size: 12px; color: var(--gris); white-space: nowrap; }
+
+.social-login { display: flex; gap: 10px; }
+.social-login button {
+  flex: 1;
+  padding: 11px;
+  border: 1.5px solid var(--crema);
+  border-radius: 10px;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--texto);
+  transition: var(--trans);
+}
+.social-login button:hover { border-color: var(--gris); background: var(--leche); }
+
+/* ─── TOAST ─── */
+.toast {
+  position: fixed;
+  bottom: 30px; left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--cafe);
+  color: var(--crema);
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 500;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  white-space: nowrap;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ─── ANIMACIONES ENTRADA ─── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* ─── MOBILE MENU ─── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 24px; height: 2px;
+  background: var(--crema);
+  transition: var(--trans);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .hero-content { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  .pasos { grid-template-columns: repeat(2, 1fr); }
+  .planes { grid-template-columns: 1fr; }
+  .plan.popular { transform: none; }
+  .plan.popular:hover { transform: translateY(-6px); }
+  .exp-grid { grid-template-columns: 1fr; }
+  .testimonios-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 600px) {
+  section { padding: 60px 20px; }
+  .pasos { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .newsletter-form { flex-direction: column; }
+  .hero-stats { flex-direction: column; gap: 16px; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+  nav { padding: 0 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- BARRA ANUNCIO -->
+<div class="anuncio">
+  🚚 Envío gratis en pedidos mayores a <span>$80.000</span> — Cosecha de temporada disponible ahora
+</div>
+
+<!-- HEADER -->
+<header>
+  <nav>
+    <a href="#" class="logo">
+      <div class="logo-icon">☕</div>
+      <span class="logo-text">Granoselecto</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#productos">Nuestros Cafés</a></li>
+      <li><a href="#proceso">Proceso</a></li>
+      <li><a href="#suscripcion">Suscripción</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="btn btn-ghost" onclick="abrirLogin()">Iniciar sesión</button>
+      <button class="btn btn-dorado" onclick="abrirLogin('registro')">Registrarse</button>
+      <button class="carrito-btn" onclick="toggleCarrito()">
+        🛒 Carrito
+        <span class="badge" id="badge">0</span>
+      </button>
+    </div>
+
+    <button class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div>
+      <div class="hero-tag fade-up">
+        <span>🌿</span> 100% origen colombiano
+      </div>
+      <h1 class="fade-up">El café de las<br><em>montañas</em><br>a tu taza</h1>
+      <p class="fade-up">Seleccionamos los mejores granos de Nariño, Huila y Antioquia para brindarte calidad, aroma y tradición en cada sorbo.</p>
+      <div class="hero-btns fade-up">
+        <button class="btn btn-dorado" onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'})">Explorar cafés →</button>
+        <button class="btn btn-ghost" onclick="document.getElementById('suscripcion').scrollIntoView({behavior:'smooth'})">Ver planes</button>
+      </div>
+      <div class="hero-stats fade-up">
+        <div>
+          <div class="stat-num">12+</div>
+          <div class="stat-label">Regiones</div>
+        </div>
+        <div>
+          <div class="stat-num">4.8★</div>
+          <div class="stat-label">Calificación</div>
+        </div>
+        <div>
+          <div class="stat-num">2.5K</div>
+          <div class="stat-label">Suscriptores</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-card fade-up">
+        <div class="hero-card-icon">🏔️</div>
+        <div class="hero-card-text">
+          <h4>Café Nariño Especial</h4>
+          <p>1.800 msnm — Notas cítricas y floral</p>
+        </div>
+      </div>
+      <div class="hero-card fade-up">
+        <div class="hero-card-icon">🌱</div>
+        <div class="hero-card-text">
+          <h4>Cultivo Sostenible</h4>
+          <p>Directamente con el caficultor</p>
+        </div>
+      </div>
+      <div class="hero-card fade-up">
+        <div class="hero-card-icon">📦</div>
+        <div class="hero-card-text">
+          <h4>Entrega en 48h</html>
+          <p>Tostado fresco y empaque hermético</p>
+        </div>
+      </div>
+      <div class="hero-card fade-up">
+        <div class="hero-card-icon">⭐</div>
+        <div class="hero-card-text">
+          <h4>Certificado de Origen</h4>
+          <p>Trazabilidad completa del grano</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section class="proceso" id="proceso">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Cómo funciona</span>
+      <h2 class="section-title">Del cultivo a tu puerta,<br>sin intermediarios</h2>
+      <p class="section-sub">Cada bolsa de Granoselecto tiene una historia. Conoce el viaje de tu café.</p>
+    </div>
+    <div class="pasos">
+      <div class="paso fade-up">
+        <div class="paso-num">01</div>
+        <div class="paso-icon">🌿</div>
+        <h3>Selección en finca</h3>
+        <p>Visitamos las fincas y seleccionamos granos maduros de alta calidad directamente con el caficultor.</p>
+      </div>
+      <div class="paso fade-up">
+        <div class="paso-num">02</div>
+        <div class="paso-icon">⚙️</div>
+        <h3>Procesado artesanal</h3>
+        <p>Proceso lavado o natural según el perfil de sabor. Control estricto de temperatura y humedad.</p>
+      </div>
+      <div class="paso fade-up">
+        <div class="paso-num">03</div>
+        <div class="paso-icon">🔥</div>
+        <h3>Tostión a medida</h3>
+        <p>Tostamos en pequeños lotes según el pedido para garantizar frescura y el perfil exacto de sabor.</p>
+      </div>
+      <div class="paso fade-up">
+        <div class="paso-num">04</div>
+        <div class="paso-icon">🚀</div>
+        <h3>Envío express</h3>
+        <p>Despachamos en 24h con empaque hermético biodegradable. Llega a tu puerta en perfectas condiciones.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTOS -->
+<section class="productos" id="productos">
+  <div class="container">
+    <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;">
+      <div>
+        <span class="section-label">Catálogo</span>
+        <h2 class="section-title">Nuestros cafés</h2>
+        <p class="section-sub">Cada región tiene su propio carácter. Descubre cuál es el tuyo.</p>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-outline-cafe filtro active" data-filtro="todos">Todos</button>
+        <button class="btn btn-outline-cafe filtro" data-filtro="narino">Nariño</button>
+        <button class="btn btn-outline-cafe filtro" data-filtro="huila">Huila</button>
+        <button class="btn btn-outline-cafe filtro" data-filtro="antioquia">Antioquia</button>
+      </div>
+    </div>
+    <div class="catalogo" id="catalogo"></div>
+  </div>
+</section>
+
+<!-- EXPERIENCIA -->
+<section class="experiencia" id="nosotros">
+  <div class="container">
+    <div class="exp-grid">
+      <div class="exp-visual fade-up">
+        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800" alt="Café colombiano">
+        <div class="exp-play-btn" onclick="mostrarToast('🎬 Video próximamente disponible')">
+          <span>▶</span>
+        </div>
+        <div class="exp-card">
+          <h4>Finca El Paraíso, Nariño</h4>
+          <p>1.900 msnm — Variedad Geisha</p>
+        </div>
+      </div>
+      <div>
+        <span class="section-label">Nuestra historia</span>
+        <h2 class="section-title">Más que café,<br>es tradición</h2>
+        <p class="section-sub">Nacimos en el corazón de las montañas nariñenses con una misión: conectar a los mejores caficultores colombianos con personas que aprecian el café de verdad.</p>
+        <div class="exp-features">
+          <div class="exp-feature fade-up">
+            <div class="exp-feature-icon">🤝</div>
+            <div>
+              <h4>Comercio justo directo</h4>
+              <p>Pagamos 40% más que el precio de bolsa a los caficultores. Sin intermediarios, sin excusas.</p>
+            </div>
+          </div>
+          <div class="exp-feature fade-up">
+            <div class="exp-feature-icon">🔬</div>
+            <div>
+              <h4>Control de calidad SCA</h4>
+              <p>Cada lote es catado por Q-Graders certificados. Solo los mejores granos llegan a ti.</p>
+            </div>
+          </div>
+          <div class="exp-feature fade-up">
+            <div class="exp-feature-icon">🌍</div>
+            <div>
+              <h4>Huella cero</h4>
+              <p>Empaque 100% compostable y compensamos las emisiones de CO₂ de cada envío.</p>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:36px;">
+          <button class="btn btn-verde" style="font-size:15px;padding:14px 28px;">Conocer más →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUSCRIPCION -->
+<section class="suscripcion" id="suscripcion">
+  <div class="container">
+    <div class="section-header" style="text-align:center;">
+      <span class="section-label">Suscripción</span>
+      <h2 class="section-title">Café fresco cada mes,<br>sin pensarlo</h2>
+      <p class="section-sub" style="margin:0 auto;">Elige tu plan y recibe granos seleccionados directamente en tu puerta. Cancela cuando quieras.</p>
+    </div>
+    <div class="planes">
+      <div class="plan fade-up">
+        <div class="plan-icono">☕</div>
+        <h3>Básico</h3>
+        <p class="plan-desc">Perfecto para empezar tu experiencia con el café premium colombiano.</p>
+        <div class="plan-precio">$45.000 <small>/mes</small></div>
+        <ul class="plan-items">
+          <li>250g de café molido o en grano</li>
+          <li>1 origen seleccionado</li>
+          <li>Tarjeta de trazabilidad</li>
+          <li>Envío incluido</li>
+        </ul>
+        <button class="btn btn-outline-cafe" style="width:100%;justify-content:center;" onclick="abrirLogin('registro')">Suscribirme</button>
+      </div>
+
+      <div class="plan popular fade-up">
+        <div class="plan-tag">⭐ Más popular</div>
+        <div class="plan-icono">🏆</div>
+        <h3>Premium</h3>
+        <p class="plan-desc">La experiencia completa para el amante del café. Descubre nuevos sabores cada mes.</p>
+        <div class="plan-precio">$85.000 <small>/mes</small></div>
+        <ul class="plan-items">
+          <li>500g — 2 orígenes distintos</li>
+          <li>Tostión personalizada</li>
+          <li>Guía de preparación exclusiva</li>
+          <li>Muestra sorpresa mensual</li>
+          <li>Acceso anticipado a nuevos cafés</li>
+          <li>Envío prioritario</li>
+        </ul>
+        <button class="btn btn-verde" style="width:100%;justify-content:center;font-size:15px;padding:14px;" onclick="abrirLogin('registro')">Suscribirme →</button>
+      </div>
+
+      <div class="plan fade-up">
+        <div class="plan-icono">👑</div>
+        <h3>Coleccionista</h3>
+        <p class="plan-desc">Para los verdaderos conocedores. Acceso a microlotes y ediciones limitadas.</p>
+        <div class="plan-precio">$140.000 <small>/mes</small></div>
+        <ul class="plan-items">
+          <li>1kg — 3 microlotes exclusivos</li>
+          <li>Cafés de competencia</li>
+          <li>Cata virtual con nuestro Q-Grader</li>
+          <li>Certificado de origen firmado</li>
+          <li>Comunidad privada Discord</li>
+          <li>Visita virtual a la finca</li>
+        </ul>
+        <button class="btn btn-outline-cafe" style="width:100%;justify-content:center;" onclick="abrirLogin('registro')">Suscribirme</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section class="testimonios">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Opiniones reales</span>
+      <h2 class="section-title">Lo que dicen<br>nuestros suscriptores</h2>
+    </div>
+    <div class="testimonios-grid">
+      <div class="testimonial fade-up">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-texto">"El café Nariño Geisha cambió mi forma de entender el café. Nunca había tomado algo tan complejo y delicioso. ¡Totalmente recomendado!"</p>
+        <div class="test-autor">
+          <div class="test-avatar-placeholder">👩</div>
+          <div>
+            <div class="test-nombre">Valentina Ruiz</div>
+            <div class="test-ciudad">Bogotá, Colombia 🇨🇴</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial fade-up">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-texto">"Llevo 8 meses con el plan Premium y cada mes me sorprenden. La guía de preparación es increíble para entender cada café."</p>
+        <div class="test-autor">
+          <div class="test-avatar-placeholder">👨</div>
+          <div>
+            <div class="test-nombre">Carlos Mendoza</div>
+            <div class="test-ciudad">Medellín, Colombia 🇨🇴</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial fade-up">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-texto">"Vivo en España y gracias a Granoselecto puedo tomar café colombiano de verdad. El sabor me transporta de vuelta a casa."</p>
+        <div class="test-autor">
+          <div class="test-avatar-placeholder">👩</div>
+          <div>
+            <div class="test-nombre">Sofía Bermúdez</div>
+            <div class="test-ciudad">Madrid, España 🇪🇸</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter" id="contacto">
+  <div class="container" style="max-width:600px;text-align:center;">
+    <span class="section-label" style="color:rgba(255,255,255,0.6)">Newsletter</span>
+    <h2>Recibe recetas, noticias<br>y ofertas exclusivas</h2>
+    <p>Únete a más de 5.000 amantes del café colombiano. Sin spam, solo buen contenido.</p>
+    <div class="newsletter-form">
+      <input type="email" placeholder="tucorreo@ejemplo.com" id="email-newsletter">
+      <button class="btn btn-dorado" onclick="suscribirNewsletter()" style="white-space:nowrap;">Suscribirme →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="footer-logo" href="#">
+        <div class="logo-icon">☕</div>
+        <span>Granoselecto</span>
+      </a>
+      <p>Café premium colombiano directamente del caficultor a tu taza. Calidad, trazabilidad y amor en cada grano.</p>
+      <div class="social-links">
+        <div class="social-link" onclick="mostrarToast('📸 Instagram próximamente')">📸</div>
+        <div class="social-link" onclick="mostrarToast('📘 Facebook próximamente')">📘</div>
+        <div class="social-link" onclick="mostrarToast('🐦 Twitter próximamente')">🐦</div>
+        <div class="social-link" onclick="mostrarToast('▶️ YouTube próximamente')">▶️</div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Productos</h4>
+      <ul>
+        <li><a href="#productos">Café Nariño</a></li>
+        <li><a href="#productos">Café Huila</a></li>
+        <li><a href="#productos">Café Antioquia</a></li>
+        <li><a href="#suscripcion">Suscripciones</a></li>
+        <li><a href="#">Ediciones limitadas</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#proceso">Proceso</a></li>
+        <li><a href="#">Caficultores</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Trabaja con nosotros</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Soporte</h4>
+      <ul>
+        <li><a href="#">Centro de ayuda</a></li>
+        <li><a href="#">Política de envíos</a></li>
+        <li><a href="#">Devoluciones</a></li>
+        <li><a href="#">Términos de uso</a></li>
+        <li><a href="#">Privacidad</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Granoselecto SAS. Todos los derechos reservados.</p>
+    <p>Hecho con ❤️ en Colombia 🇨🇴</p>
+  </div>
+</footer>
+
+<!-- CARRITO OVERLAY -->
+<div class="carrito-overlay" id="carritoOverlay" onclick="toggleCarrito()"></div>
+<div class="carrito-panel" id="carritoPanel">
+  <div class="carrito-header">
+    <h3>🛒 Mi carrito</h3>
+    <button class="cerrar-btn" onclick="toggleCarrito()">✕</button>
+  </div>
+  <div class="carrito-items" id="carritoItems">
+    <div class="carrito-vacio" id="carritoVacio">
+      <span>🛒</span>
+      <p>Tu carrito está vacío.<br>¡Agrega un café delicioso!</p>
+    </div>
+  </div>
+  <div class="carrito-footer" id="carritoFooter" style="display:none;">
+    <div class="carrito-total">
+      <span>Total</span>
+      <span id="totalTexto">$0</span>
+    </div>
+    <button class="btn btn-verde" style="width:100%;justify-content:center;font-size:15px;padding:14px;margin-bottom:10px;" onclick="checkout()">
+      Finalizar compra →
+    </button>
+    <button class="btn btn-ghost" style="width:100%;justify-content:center;color:var(--gris);border-color:var(--crema);" onclick="toggleCarrito()">
+      Seguir comprando
+    </button>
+  </div>
+</div>
+
+<!-- MODAL LOGIN -->
+<div class="modal-overlay" id="modalLogin">
+  <div class="modal">
+    <button class="modal-close" onclick="cerrarLogin()">✕</button>
+    <div class="modal-logo">
+      <span>☕</span>
+      <h3>Granoselecto</h3>
+      <p id="modalSubtitulo">Bienvenido de vuelta</p>
+    </div>
+    <div class="tabs">
+      <button class="tab active" id="tabLogin" onclick="cambiarTab('login')">Iniciar sesión</button>
+      <button class="tab" id="tabRegistro" onclick="cambiarTab('registro')">Crear cuenta</button>
+    </div>
+    <div id="formLogin">
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <input type="email" placeholder="tucorreo@ejemplo.com">
+      </div>
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" placeholder="••••••••">
+      </div>
+      <div class="form-extra">
+        <label><input type="checkbox"> Recordarme</label>
+        <a href="#">¿Olvidaste tu contraseña?</a>
+      </div>
+      <button class="btn btn-verde" style="width:100%;justify-content:center;font-size:15px;padding:14px;" onclick="simularLogin()">
+        Iniciar sesión →
+      </button>
+    </div>
+    <div id="formRegistro" style="display:none;">
+      <div class="form-group">
+        <label>Nombre completo</label>
+        <input type="text" placeholder="Tu nombre">
+      </div>
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <input type="email" placeholder="tucorreo@ejemplo.com">
+      </div>
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" placeholder="Mínimo 8 caracteres">
+      </div>
+      <button class="btn btn-verde" style="width:100%;justify-content:center;font-size:15px;padding:14px;" onclick="simularRegistro()">
+        Crear cuenta →
+      </button>
+    </div>
+    <div class="divider"><span></span><p>o continúa con</p><span></span></div>
+    <div class="social-login">
+      <button onclick="mostrarToast('🔐 Próximamente: Google')">🇬 Google</button>
+      <button onclick="mostrarToast('🔐 Próximamente: Facebook')">📘 Facebook</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✅ Mensaje</div>
+
+<script>
+// ─── DATOS PRODUCTOS ───
+const productos = [
+  {
+    id:1,
+    nombre:"Café Nariño Especial",
+    region:"narino",
+    regionLabel:"Nariño",
+    precio:38000,
+    desc:"Notas cítricas, floral y panela. Cultivado a 1.800 msnm.",
+    img:"https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=400",
+    badge:"Premium",
+    estrellas:5,
+    gramos:"250g"
+  },
+  {
+    id:2,
+    nombre:"Café Huila Natural",
+    region:"huila",
+    regionLabel:"Huila",
+    precio:34000,
+    desc:"Proceso natural. Frutos rojos, chocolate amargo y almendras.",
+    img:"https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400",
+    badge:"Popular",
+    estrellas:5,
+    gramos:"250g"
+  },
+  {
+    id:3,
+    nombre:"Café Antioquia Lavado",
+    region:"antioquia",
+    regionLabel:"Antioquia",
+    precio:30000,
+    desc:"Proceso lavado. Caramelo, nuez y acidez equilibrada. Versátil.",
+    img:"https://images.unsplash.com/photo-1511920170033-f8396924c348?w=400",
+    badge:null,
+    estrellas:4,
+    gramos:"250g"
+  },
+  {
+    id:4,
+    nombre:"Microlote Geisha Nariño",
+    region:"narino",
+    regionLabel:"Nariño",
+    precio:65000,
+    desc:"Variedad Geisha de competencia. Jazmín, bergamota y té verde.",
+    img:"https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400",
+    badge:"Edición Limitada",
+    estrellas:5,
+    gramos:"150g"
+  },
+  {
+    id:5,
+    nombre:"Blend Granoselecto",
+    region:"antioquia",
+    regionLabel:"Blend",
+    precio:28000,
+    desc:"Nuestra mezcla insignia. Equilibrio perfecto para espresso y filtrado.",
+    img:"https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=400",
+    badge:"Nuevo",
+    estrellas:4,
+    gramos:"250g"
+  },
+  {
+    id:6,
+    nombre:"Café Huila Honey",
+    region:"huila",
+    regionLabel:"Huila",
+    precio:36000,
+    desc:"Proceso Honey. Miel, durazno y cuerpo cremoso. Poco ácido.",
+    img:"https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400",
+    badge:null,
+    estrellas:5,
+    gramos:"250g"
+  }
+];
+
+let carrito = [];
+let filtroActual = "todos";
+
+// ─── RENDER PRODUCTOS ───
+function cargarProductos(filtro = "todos") {
+  const cont = document.getElementById("catalogo");
+  cont.innerHTML = "";
+  const lista = filtro === "todos" ? productos : productos.filter(p => p.region === filtro);
+  lista.forEach((p, i) => {
+    const estrellas = "★".repeat(p.estrellas) + "☆".repeat(5 - p.estrellas);
+    const badge = p.badge ? `<div class="card-badge ${p.badge==='Nuevo'?'nuevo':''}">${p.badge}</div>` : '';
+    cont.innerHTML += `
+    <div class="card fade-up" style="animation-delay:${i*0.08}s">
+      ${badge}
+      <img class="card-img" src="${p.img}" alt="${p.nombre}" loading="lazy">
+      <div class="card-content">
+        <div class="card-region">${p.regionLabel} · ${p.gramos}</div>
+        <h3>${p.nombre}</h3>
+        <div class="card-estrellas">${estrellas} (${12+p.id*7})</div>
+        <p class="card-desc">${p.desc}</p>
+        <div class="card-footer">
+          <div class="precio">$${p.precio.toLocaleString()} <span>/bolsa</span></div>
+          <button class="add-btn" onclick="agregarAlCarrito(${p.id})">
+            + Agregar
+          </button>
+        </div>
+      </div>
+    </div>`;
+  });
+  observarFadeUp();
+}
+
+// ─── FILTROS ───
+document.querySelectorAll('.filtro').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filtro').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filtro;
+    cargarProductos(f);
+  });
+});
+
+// ─── CARRITO ───
+function agregarAlCarrito(id) {
+  const prod = productos.find(p => p.id === id);
+  carrito.push({...prod, uid: Date.now() + Math.random()});
+  actualizarCarrito();
+  mostrarToast(`☕ "${prod.nombre}" agregado al carrito`);
+}
+
+function eliminarDelCarrito(uid) {
+  carrito = carrito.filter(p => p.uid !== uid);
+  actualizarCarrito();
+}
+
+function actualizarCarrito() {
+  const count = carrito.length;
+  document.getElementById("badge").textContent = count;
+  const itemsCont = document.getElementById("carritoItems");
+  const footer = document.getElementById("carritoFooter");
+  const vacio = document.getElementById("carritoVacio");
+  const total = carrito.reduce((s, p) => s + p.precio, 0);
+
+  if (count === 0) {
+    vacio.style.display = "block";
+    footer.style.display = "none";
+    itemsCont.innerHTML = '';
+    itemsCont.appendChild(vacio);
+    return;
+  }
+
+  vacio.style.display = "none";
+  footer.style.display = "block";
+
+  let html = '';
+  carrito.forEach(p => {
+    html += `
+    <div class="cart-item">
+      <img src="${p.img}" alt="${p.nombre}">
+      <div class="cart-item-info">
+        <h4>${p.nombre}</h4>
+        <p>${p.regionLabel} · ${p.gramos}</p>
+      </div>
+      <span class="cart-item-precio">$${p.precio.toLocaleString()}</span>
+      <button class="cart-item-del" onclick="eliminarDelCarrito(${p.uid})">🗑️</button>
+    </div>`;
+  });
+  itemsCont.innerHTML = html;
+  document.getElementById("totalTexto").textContent = `$${total.toLocaleString()}`;
+}
+
+function toggleCarrito() {
+  document.getElementById("carritoOverlay").classList.toggle("open");
+  document.getElementById("carritoPanel").classList.toggle("open");
+  document.body.style.overflow = document.getElementById("carritoPanel").classList.contains("open") ? "hidden" : "";
+}
+
+function checkout() {
+  toggleCarrito();
+  setTimeout(() => {
+    abrirLogin('registro');
+    mostrarToast('🔐 Inicia sesión para completar tu compra');
+  }, 400);
+}
+
+// ─── LOGIN MODAL ───
+function abrirLogin(tab = 'login') {
+  document.getElementById("modalLogin").classList.add("open");
+  document.body.style.overflow = "hidden";
+  cambiarTab(tab);
+}
+
+function cerrarLogin() {
+  document.getElementById("modalLogin").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+document.getElementById("modalLogin").addEventListener("click", function(e) {
+  if (e.target === this) cerrarLogin();
+});
+
+function cambiarTab(tab) {
+  const esLogin = tab === 'login';
+  document.getElementById("tabLogin").classList.toggle("active", esLogin);
+  document.getElementById("tabRegistro").classList.toggle("active", !esLogin);
+  document.getElementById("formLogin").style.display = esLogin ? "block" : "none";
+  document.getElementById("formRegistro").style.display = esLogin ? "none" : "block";
+  document.getElementById("modalSubtitulo").textContent = esLogin ? "Bienvenido de vuelta" : "Crea tu cuenta gratis";
+}
+
+function simularLogin() {
+  cerrarLogin();
+  mostrarToast("✅ ¡Bienvenido! Sesión iniciada correctamente");
+}
+
+function simularRegistro() {
+  cerrarLogin();
+  mostrarToast("🎉 ¡Cuenta creada! Revisa tu correo para confirmar");
+}
+
+// ─── TOAST ───
+let toastTimeout;
+function mostrarToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => t.classList.remove("show"), 3000);
+}
+
+// ─── NEWSLETTER ───
+function suscribirNewsletter() {
+  const email = document.getElementById("email-newsletter").value;
+  if (!email || !email.includes("@")) {
+    mostrarToast("⚠️ Ingresa un correo válido");
+    return;
+  }
+  document.getElementById("email-newsletter").value = "";
+  mostrarToast("✅ ¡Suscrito! Revisa tu correo para confirmar");
+}
+
+// ─── FADE UP OBSERVER ───
+function observarFadeUp() {
+  const items = document.querySelectorAll('.fade-up:not(.visible)');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  items.forEach(el => obs.observe(el));
+}
+
+// ─── MENU MOBILE ───
+function toggleMenu() {
+  mostrarToast("☰ Menú: usa el scroll para navegar");
+}
+
+// ─── INIT ───
+window.addEventListener('DOMContentLoaded', () => {
+  cargarProductos();
+  actualizarCarrito();
+  observarFadeUp();
+  setTimeout(observarFadeUp, 300);
+});
+</script>
+</body>
+</html>
